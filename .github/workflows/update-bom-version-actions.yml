@@ -6,7 +6,8 @@ on:
         required: true
       sdk-name: # id of input
         description: 'the name of the sdk'
-        required: true
+        required: false
+        default: 'default'
 jobs:
   update_bom_version:
     runs-on: ubuntu-latest

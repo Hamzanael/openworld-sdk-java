@@ -26,7 +26,12 @@ class PomConverter {
         this.findSdkNode(this.pomInJsFormat, this.pomInJsFormat, 'artifactId', sdkName)
         if (this.targetParent !== null) {
             searchAndPerformActionOnSpecificNode(this.targetParent, 'version', (node) => {
-                node.elements[0].text = sdkVersion
+                if (sdkVersion !== 'default') {
+                    node.elements[0].text = sdkVersion
+                }
+                else {
+                    this.incrementVersion(node.elements[0])
+                }
             })
         } else {
             // save the new dependency in the pom
@@ -71,13 +76,17 @@ class PomConverter {
     updateBomVersion() {
         let version = this.pomInJsFormat.elements[0].elements.filter((element) => element.name === 'version'
         )[0].elements[0];
+        this.incrementVersion(version);
+        return version
+    }
+
+    incrementVersion(version) {
         let lastDigit = version.text[version.text.length - 1];
         if (!isNaN(lastDigit)) {
             version.text = version.text.slice(0, -1) + (parseInt(lastDigit) + 1)
         } else {
             version.text = version.text + '.1'
         }
-        return version
     }
 
     getXml() {
