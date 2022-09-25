@@ -3,11 +3,11 @@ on:
     inputs:
       sdk-version: # id of input
         description: 'the version of the sdk'
-        required: true
-      sdk-name: # id of input
-        description: 'the name of the sdk'
         required: false
         default: 'default'
+      sdk-name: # id of input
+        description: 'the name of the sdk'
+        required: true
 jobs:
   update_bom_version:
     runs-on: ubuntu-latest
